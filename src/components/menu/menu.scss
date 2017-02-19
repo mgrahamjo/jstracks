@@ -1,0 +1,17 @@
+.menu {
+    background-color: darken($black, 3%);
+}
+
+.menu-btn {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color $transition;
+
+    &:hover {
+        background-color: $black;
+    }
+
+    &:active {
+        background-color: darken($black, 6%);
+    }
+}

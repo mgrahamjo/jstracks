@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'museo sans';
+    src: url('./fonts/museo_sans_100-webfont.eot');
+    src:
+        url('./fonts/museo_sans_100-webfont.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/museo_sans_100-webfont.woff') format('woff'),
+        url('./fonts/museo_sans_100-webfont.woff2') format('woff2'),
+        url('./fonts/museo_sans_100-webfont.ttf') format('truetype'),
+        url('./fonts/museo_sans_100-webfont.svg#webfont') format('svg');
+    font-weight: 100;
+}

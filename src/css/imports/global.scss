@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+    color: white;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 9pt;
+    background-color: $black;
+    -webkit-tap-highlight-color: transparent;
+}
+
+a {
+    color: $blue;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color $transition;
+
+    &:hover {
+        color: lighten($blue, 10%);
+    }
+}
+
+button {
+    appearance: none;
+    color: white;
+    background-color: $blue;
+    transition: background-color $transition;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+
+    &:focus {
+        box-shadow: 0 0 0 2px lighten($blue, 3%);
+        outline: none;
+    }
+
+    &:hover {
+        background-color: lighten($blue, 3%);
+    }
+
+    &:active {
+        background-color: darken($blue, 3%);
+    }
+}

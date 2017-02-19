@@ -1,0 +1,25 @@
+/* imports */
+@import './imports/variables';
+@import './imports/fonts';
+@import './imports/global';
+/* components */
+@import '../components/menu/menu';
+@import '../components/player/player';
+
+.clear::after {
+    content:"";
+    display:table;
+    clear:both;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.hidden {
+    display: none;
+}
