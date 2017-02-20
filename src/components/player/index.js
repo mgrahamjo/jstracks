@@ -2,32 +2,35 @@ import uav from 'uav';
 import context from 'util/audiocontext';
 import decode from 'util/decode';
 import swap from 'util/swap';
+import formatTime from 'util/format-time';
 import cursor from 'components/cursor';
 
 const state = {
     buffers: [],
     duration: 0,
-    time: 0,
     visibleDuration: 30,
     pixelsPerSecond: document.body.offsetWidth / 30
 };
 
 const model = uav.model({
+    time: 0,
     cursor: cursor(),
     times: [],
     setTime: e => {
         model.cursor.position = e.clientX;
-        state.time = e.clientX / state.pixelsPerSecond;
-    }
+        model.time = e.clientX / state.pixelsPerSecond;
+    },
+    format: formatTime
 });
 
 function player() {
 
     return uav.component(model, `
         <div class="player">
-            <div class="timescale" loop="times" as="time" onclick={setTime}>
-                <div class="time">
-                    <div class="time-text">{time}</div>
+            <div class="timer">{format(time)}</div>
+            <div class="timescale clear" loop="times" as="tick" onclick={setTime}>
+                <div class="time" style="width:${state.pixelsPerSecond}px">
+                    <div class="time-text">{tick}</div>
                 </div>
             </div>
             <cursor></cursor>
@@ -35,11 +38,9 @@ function player() {
         </div>`);
 }
 
-const timeCount = document.body.offsetWidth / 40;
+for (let i = 0; i < state.visibleDuration; i++) {
 
-for (let i = 0; i < timeCount; i++) {
-
-    model.times.push((i * 40 / state.pixelsPerSecond).toFixed(2));
+    model.times.push(i + ':00');
 
 }
 
@@ -56,29 +57,29 @@ player.play = () => {
         let when = 0,
             offset = 0;
 
-        if (buffer.startTime > state.time) {
+        if (buffer.startTime > model.time) {
 
-            when = buffer.startTime - state.time;
+            when = buffer.startTime - model.time;
 
         } else {
 
-            offset = state.time - buffer.startTime;
+            offset = model.time - buffer.startTime;
 
         }
 
-        source.start(when, offset);
+        source.start(context.currentTime + when, offset);
 
         return source;
 
     });
 
-    state.timeout = setTimeout(player.stop, (state.duration - state.time) * 1000);
+    state.timeout = setTimeout(player.stop, (state.duration - model.time) * 1000);
 
     state.interval = setInterval(() => {
 
-        state.time += 0.05;
+        model.time += 0.05;
 
-        model.cursor.position = state.pixelsPerSecond * state.time;
+        model.cursor.position = state.pixelsPerSecond * model.time;
 
     }, 50);
 
@@ -104,7 +105,7 @@ player.stop = () => {
 
     player.pause();
 
-    state.time = 0;
+    model.time = 0;
 
     model.cursor.position = 0;
 
@@ -142,21 +143,21 @@ player.addTrack = file => {
 
     decode(file, buffer => {
 
-        buffer.startTime = state.time;
+        buffer.startTime = model.time;
 
-        if (buffer.duration > state.duration) {
+        if (buffer.duration + buffer.startTime > state.duration) {
 
-            state.duration = buffer.duration;
+            state.duration = buffer.duration + buffer.startTime;
 
         }
 
         /* Draw waveform */
 
-        canvas.left = buffer.startTime * state.pixelsPerSecond + 'px';
+        canvas.style.left = model.time * state.pixelsPerSecond + 'px';
 
         canvas.width = buffer.duration * state.pixelsPerSecond;
 
-        canvas.height = track.offsetHeight;
+        canvas.height = 100;
 
         canvas.classList.add('visible');
 

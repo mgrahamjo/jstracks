@@ -20,6 +20,7 @@ export default () => {
         <div class="menu clear">
             <div class="menu-btn left" onclick={clickImport}>IMPORT</div>
             <input class="hidden" type="file" accept="audio/*" onchange={newFile}/>
+            <div class="menu-btn left">EXPORT</div>
         </div>`);
 
 };
