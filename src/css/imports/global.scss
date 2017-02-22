@@ -8,6 +8,9 @@ body {
     background-color: $black;
     -webkit-tap-highlight-color: transparent;
     overflow: hidden;
+    height: 100%;
+    width: 100%;
+    position: absolute;
 }
 
 a {

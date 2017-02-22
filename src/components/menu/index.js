@@ -1,5 +1,5 @@
 import uav from 'uav';
-import player from 'components/player';
+import addTrack from 'components/player/add-track';
 
 export default () => {
 
@@ -9,7 +9,7 @@ export default () => {
 
             if (e.target.files.length) {
 
-                player.addTrack(e.target.files[0]);
+                addTrack(e.target.files[0]);
 
             }
 

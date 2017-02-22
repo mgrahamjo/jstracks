@@ -27,6 +27,8 @@
     background-color: #3a3a3a;
     color: #8c8c8c;
     cursor: crosshair;
+    overflow: hidden;
+    width: 150%;
 }
 
 .time {
@@ -36,6 +38,17 @@
     margin-top: 7px;
     float: left;
     margin-left: -1px;
+    position: relative;
+
+/*    &:before {
+        display: block;
+        content: "";
+        border-left: 1px solid #c5c5c5;
+        margin-left: 50%;
+        height: 50%;
+        bottom: 0;
+        position: absolute;
+    }*/
 }
 
 .time-text {
@@ -50,4 +63,5 @@
     top: 8px;
     font-size: 16pt;
     color: #42c7e8;
+    text-align: right;
 }
